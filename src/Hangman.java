@@ -11,6 +11,8 @@ public class Hangman {
     private static final int possibleTries = 6;
     private static int countUserTries = 0;
 
+    public static void setCountUserTries(int x) { countUserTries = x; }
+
     public static void clearTerm() {
         System.out.print(combClear);
         System.out.flush();
@@ -18,7 +20,7 @@ public class Hangman {
 
     private static void printImage(int err, char[] userAnswer) {
         clearTerm();
-        System.out.println("err = "+err);
+        System.out.println("errors : " + err);
         System.out.println(StagesOfHangman.getHangman()[err]);
         System.out.println(userAnswer);
     }
@@ -37,19 +39,19 @@ public class Hangman {
     }
 
     private static void game() {
-        String word = Hangman.getRandomWordFromFile();
-        char[] userAnswer = word.toCharArray();
+        String secretWord = Hangman.getRandomWordFromFile();
+        char[] userAnswer = secretWord.toCharArray();
         Arrays.fill(userAnswer, '_');
 
         Hangman.printImage(countUserTries, userAnswer);
         Scanner input = new Scanner(System.in);
         while (countUserTries < possibleTries && new String(userAnswer).contains("_")) {
             String literal = ""+input.next().charAt(0);
-            int index = word.indexOf(literal);
+            int index = secretWord.indexOf(literal);
             if (index > -1) {
                 while (index != -1) {
                     userAnswer[index] = literal.charAt(0);
-                    index = word.indexOf(literal, index + 1);
+                    index = secretWord.indexOf(literal, index + 1);
                 }
             } else {
                 countUserTries++;
@@ -57,20 +59,21 @@ public class Hangman {
             Hangman.printImage(countUserTries, userAnswer);
         }
         if (countUserTries == possibleTries) {
-            System.out.println("lose, word – "+word);
+            System.out.println("you lose, word – " + secretWord);
         } else {
-            System.out.println("win");
+            System.out.println("win!");
         }
         Hangman.startGame();
     }
 
     public static void startGame() {
+        setCountUserTries(0);
         System.out.println("1 for game, 2 for exit");
         Scanner input2 = new Scanner(System.in);
-        switch (input2.nextInt()) {
-            case (1) -> Hangman.game();
-            case (2) -> System.out.println("bye!");
-            default -> System.out.println("1 for game, 2 for exit");
+        switch (input2.next().charAt(0)) {
+            case ('1') -> Hangman.game();
+            case ('2') -> System.out.println("bye!");
+            default -> startGame();
         }
     }
 }
