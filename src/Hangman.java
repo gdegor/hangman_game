@@ -27,7 +27,7 @@ public class Hangman {
 
     private static String getRandomWordFromFile() {
         List<String> listWords = new ArrayList<>();
-        String path = new File("src/words.txt").getAbsolutePath();
+        String path = new File("resource/words.txt").getAbsolutePath();
         try {
             listWords = Files.readAllLines(Paths.get(path));
         } catch (IOException e) {
