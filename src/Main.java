@@ -2,7 +2,7 @@ package src;
 
 public class Main {
     public static void main(String[] args) {
-        Hangman.clearTerm();
-        Hangman.startGame();
+        DrawGame.clearTerm();
+        LogicGame.startGame();
     }
 }
