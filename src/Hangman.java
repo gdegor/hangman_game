@@ -1,3 +1,5 @@
+package src;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -5,81 +7,25 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Hangman {
-    private static final String[] hangman = {
-                                              "    +---+\n" +
-                                              "    |   |\n" +
-                                              "    |\n" +
-                                              "    |\n" +
-                                              "    |\n" +
-                                              "    |\n" +
-                                              "    =========",
+    private static final String combClear = "\033[H\033[2J";
+    private static final int possibleTries = 6;
+    private static int countUserTries = 0;
 
-                                             "    +---+\n" +
-                                             "    |   |\n" +
-                                             "    |   O\n" +
-                                             "    |\n" +
-                                             "    |\n" +
-                                             "    |\n" +
-                                             "    =========",
-
-                                             "    +---+\n" +
-                                             "    |   |\n" +
-                                             "    |   O\n" +
-                                             "    |   |\n" +
-                                             "    |\n" +
-                                             "    |\n" +
-                                             "    =========",
-
-                                             "    +---+\n" +
-                                             "    |   |\n" +
-                                             "    |   O\n" +
-                                             "    |  /|\n" +
-                                             "    |\n" +
-                                             "    |\n" +
-                                             "    =========",
-
-                                             "    +---+\n" +
-                                             "    |   |\n" +
-                                             "    |   O\n" +
-                                             "    |  /|\\\n" +
-                                             "    |\n" +
-                                             "    |\n" +
-                                             "    =========",
-
-                                             "    +---+\n" +
-                                             "    |   |\n" +
-                                             "    |   O\n" +
-                                             "    |  /|\\\n" +
-                                             "    |  /\n" +
-                                             "    |\n" +
-                                             "    =========",
-
-                                             "    +---+\n" +
-                                             "    |   |\n" +
-                                             "    |   O\n" +
-                                             "    |  /|\\\n" +
-                                             "    |  / \\\n" +
-                                             "    |\n" +
-                                             "    =========" };
-
-
-    private static final int tries = 6;
-
-    public static String[] getHangman() {
-        return hangman;
+    public static void clearTerm() {
+        System.out.print(combClear);
+        System.out.flush();
     }
 
-    public static void printImage(int err, char[] userAnswer) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+    private static void printImage(int err, char[] userAnswer) {
+        clearTerm();
         System.out.println("err = "+err);
-        System.out.println(Hangman.getHangman()[err]);
+        System.out.println(StagesOfHangman.getHangman()[err]);
         System.out.println(userAnswer);
     }
 
-    public static String getRandomWordFromFile() {
+    private static String getRandomWordFromFile() {
         List<String> listWords = new ArrayList<>();
-        String path = new File("words.txt").getAbsolutePath();
+        String path = new File("src/words.txt").getAbsolutePath();
         try {
             listWords = Files.readAllLines(Paths.get(path));
         } catch (IOException e) {
@@ -90,15 +36,14 @@ public class Hangman {
         return listWords.get(random.nextInt(listWords.size()));
     }
 
-    public static void game() {
+    private static void game() {
         String word = Hangman.getRandomWordFromFile();
-        int err = 0;
         char[] userAnswer = word.toCharArray();
         Arrays.fill(userAnswer, '_');
 
-        Hangman.printImage(err, userAnswer);
+        Hangman.printImage(countUserTries, userAnswer);
         Scanner input = new Scanner(System.in);
-        while (err < tries && new String(userAnswer).contains("_")) {
+        while (countUserTries < possibleTries && new String(userAnswer).contains("_")) {
             String literal = ""+input.next().charAt(0);
             int index = word.indexOf(literal);
             if (index > -1) {
@@ -107,11 +52,11 @@ public class Hangman {
                     index = word.indexOf(literal, index + 1);
                 }
             } else {
-                err++;
+                countUserTries++;
             }
-            Hangman.printImage(err, userAnswer);
+            Hangman.printImage(countUserTries, userAnswer);
         }
-        if (err == tries) {
+        if (countUserTries == possibleTries) {
             System.out.println("lose, word – "+word);
         } else {
             System.out.println("win");
@@ -127,10 +72,5 @@ public class Hangman {
             case (2) -> System.out.println("bye!");
             default -> System.out.println("1 for game, 2 for exit");
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.print("\033[H\033[2J");
-        Hangman.startGame();
     }
 }
