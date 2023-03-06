@@ -1,6 +1,7 @@
 package src;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class LogicGame {
     private static final int possibleTries = 6;
