@@ -38,6 +38,7 @@ public class LogicGame {
         } else {
             System.out.println("win!");
         }
+        input.close();
         LogicGame.startGame();
     }
 
@@ -50,5 +51,6 @@ public class LogicGame {
             case ('2') -> System.out.println("bye!");
             default -> startGame();
         }
+        input2.close();
     }
 }
