@@ -1,4 +1,4 @@
-package src;
+package main;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,14 +11,13 @@ import java.util.Random;
 public class ReadFile {
     static String getRandomWordFromFile() {
         List<String> listWords = new ArrayList<>();
-        String path = new File("resource/words.txt").getAbsolutePath();
+        String path = new File("../resource/russian_nouns.txt").getAbsolutePath();
         try {
             listWords = Files.readAllLines(Paths.get(path));
         } catch (IOException e) {
             System.out.println("file not exists");
             System.exit(1);
         }
-        Random random = new Random();
-        return listWords.get(random.nextInt(listWords.size()));
+        return listWords.get(new Random().nextInt(listWords.size()));
     }
 }

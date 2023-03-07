@@ -1,33 +1,37 @@
-package src;
+package main;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class LogicGame {
-    private static final int possibleTries = 6;
     private static int countUserTries = 0;
-
     public static void setCountUserTries(int x) { countUserTries = x; }
 
     private static void game() {
+        final int possibleTries = 6;
+        final String symbolMissedLetter = "-";
+        String wrongUserLetter = "";
         String secretWord = ReadFile.getRandomWordFromFile();
         char[] userAnswer = secretWord.toCharArray();
-        Arrays.fill(userAnswer, '_');
+        Arrays.fill(userAnswer, symbolMissedLetter.charAt(0));
 
-        DrawGame.printImage(countUserTries, userAnswer);
+        DrawGame.printImage(countUserTries, userAnswer, wrongUserLetter);
         Scanner input = new Scanner(System.in);
-        while (countUserTries < possibleTries && new String(userAnswer).contains("_")) {
-            String literal = ""+input.next().charAt(0);
-            int index = secretWord.indexOf(literal);
+        while (countUserTries < possibleTries && new String(userAnswer).contains(symbolMissedLetter)) {
+            String letter = (input.next().charAt(0)+"").toLowerCase();
+            int index = secretWord.indexOf(letter);
             if (index > -1) {
                 while (index != -1) {
-                    userAnswer[index] = literal.charAt(0);
-                    index = secretWord.indexOf(literal, index + 1);
+                    userAnswer[index] = letter.charAt(0);
+                    index = secretWord.indexOf(letter, index + 1);
                 }
             } else {
-                countUserTries++;
+                if (!wrongUserLetter.contains(letter) && letter.charAt(0) >= 'а' && letter.charAt(0) <= 'я') {
+                    wrongUserLetter += letter.charAt(0);
+                    countUserTries++;
+                }
             }
-            DrawGame.printImage(countUserTries, userAnswer);
+            DrawGame.printImage(countUserTries, userAnswer, wrongUserLetter);
         }
         if (countUserTries == possibleTries) {
             System.out.println("you lose, word – " + secretWord);

@@ -1,4 +1,4 @@
-package src;
+package main;
 
 public class StagesOfHangman {
     private static final String[] hangman = {
