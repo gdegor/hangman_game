@@ -7,7 +7,7 @@ ___
 - откройте терминал
 - перейдите в папку `hangman_game`
 - скомпилируйте программу `javac src/*.java`
-- запустите игру `java src/Main.java`
+- запустите игру `java src/main.Main.java`
 
 ![1](img/1.png)
 ![2](img/2.png)
