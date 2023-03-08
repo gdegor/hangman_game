@@ -7,18 +7,28 @@ public class LogicGame {
     private static int countUserTries = 0;
     public static void setCountUserTries(int x) { countUserTries = x; }
 
+    private static boolean userWins(String winWord, char[] userWord) {
+        return winWord.equals(String.valueOf(userWord));
+    }
+
+    private static boolean isRussianLetter(char letter) {
+        return letter >= 'а' && letter <= 'я';
+    }
+
     private static void game() {
         final int possibleTries = 6;
         final String symbolMissedLetter = "-";
-        String wrongUserLetter = "";
+
+        String wrongUserLetters = "";
         String secretWord = ReadFile.getRandomWordFromFile();
-        char[] userAnswer = secretWord.toCharArray();
+        char[] userAnswer = new char[secretWord.length()];
         Arrays.fill(userAnswer, symbolMissedLetter.charAt(0));
 
-        DrawGame.printImage(countUserTries, userAnswer, wrongUserLetter);
+        DrawGame.printImage(countUserTries, userAnswer, wrongUserLetters);
         Scanner input = new Scanner(System.in);
-        while (countUserTries < possibleTries && new String(userAnswer).contains(symbolMissedLetter)) {
-            String letter = (input.next().charAt(0)+"").toLowerCase();
+
+        while (countUserTries < possibleTries && !userWins(secretWord, userAnswer)) {
+            String letter = (String.valueOf(input.next().charAt(0))).toLowerCase();
             int index = secretWord.indexOf(letter);
             if (index > -1) {
                 while (index != -1) {
@@ -26,17 +36,18 @@ public class LogicGame {
                     index = secretWord.indexOf(letter, index + 1);
                 }
             } else {
-                if (!wrongUserLetter.contains(letter) && letter.charAt(0) >= 'а' && letter.charAt(0) <= 'я') {
-                    wrongUserLetter += letter.charAt(0);
+                if (!wrongUserLetters.contains(letter) && isRussianLetter(letter.charAt(0))) {
+                    wrongUserLetters += letter.charAt(0);
                     countUserTries++;
                 }
             }
-            DrawGame.printImage(countUserTries, userAnswer, wrongUserLetter);
+            DrawGame.printImage(countUserTries, userAnswer, wrongUserLetters);
         }
-        if (countUserTries == possibleTries) {
-            System.out.println("you lose, word – " + secretWord);
+
+        if (userWins(secretWord, userAnswer)) {
+            System.out.println("you win!");
         } else {
-            System.out.println("win!");
+            System.out.println("you lose, word – " + secretWord);
         }
         LogicGame.startGame();
     }

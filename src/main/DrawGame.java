@@ -2,7 +2,7 @@ package main;
 
 public class DrawGame {
     public static void clearTerm() {
-        final String combClear = "\033[H\033[2J";
+        final String combClear = "\033[H\033[2J"; // for start program in terminal
         System.out.print(combClear);
         System.out.flush();
     }

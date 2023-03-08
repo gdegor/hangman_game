@@ -3,3 +3,4 @@
 src/main/*.class
 .DS_Store
 java
+out
