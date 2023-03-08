@@ -4,30 +4,33 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class LogicGame {
-    private static int countUserTries = 0;
-    public static void setCountUserTries(int x) { countUserTries = x; }
+    private static int countUserErrors = 0;
 
-    private static boolean userWins(String winWord, char[] userWord) {
-        return winWord.equals(String.valueOf(userWord));
+    public static void setCountUserErrors(int x) {
+        countUserErrors = x;
+    }
+
+    private static boolean userWins(String secretWord, char[] userWord) {
+        return secretWord.equals(String.valueOf(userWord));
     }
 
     private static boolean isRussianLetter(char letter) {
         return letter >= 'а' && letter <= 'я';
     }
 
-    private static void game() {
-        final int possibleTries = 6;
-        final String symbolMissedLetter = "-";
+    private static void gameLoop() {
+        final int maxCountErrors = 6;
+        final String symbolMaskedLetter = "-";
 
         String wrongUserLetters = "";
         String secretWord = ReadFile.getRandomWordFromFile();
         char[] userAnswer = new char[secretWord.length()];
-        Arrays.fill(userAnswer, symbolMissedLetter.charAt(0));
+        Arrays.fill(userAnswer, symbolMaskedLetter.charAt(0));
 
-        DrawGame.printImage(countUserTries, userAnswer, wrongUserLetters);
+        DrawGame.printImage(countUserErrors, userAnswer, wrongUserLetters);
         Scanner input = new Scanner(System.in);
 
-        while (countUserTries < possibleTries && !userWins(secretWord, userAnswer)) {
+        while (countUserErrors < maxCountErrors && !userWins(secretWord, userAnswer)) {
             String letter = (String.valueOf(input.next().charAt(0))).toLowerCase();
             int index = secretWord.indexOf(letter);
             if (index > -1) {
@@ -38,10 +41,10 @@ public class LogicGame {
             } else {
                 if (!wrongUserLetters.contains(letter) && isRussianLetter(letter.charAt(0))) {
                     wrongUserLetters += letter.charAt(0);
-                    countUserTries++;
+                    countUserErrors++;
                 }
             }
-            DrawGame.printImage(countUserTries, userAnswer, wrongUserLetters);
+            DrawGame.printImage(countUserErrors, userAnswer, wrongUserLetters);
         }
 
         if (userWins(secretWord, userAnswer)) {
@@ -53,11 +56,11 @@ public class LogicGame {
     }
 
     public static void startGame() {
-        setCountUserTries(0);
+        setCountUserErrors(0);
         System.out.println("1 for game, 2 for exit");
         Scanner input2 = new Scanner(System.in);
         switch (input2.next().charAt(0)) {
-            case ('1') -> LogicGame.game();
+            case ('1') -> LogicGame.gameLoop();
             case ('2') -> System.out.println("bye!");
             default -> startGame();
         }

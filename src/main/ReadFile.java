@@ -10,12 +10,12 @@ import java.util.Random;
 
 public class ReadFile {
     static Path getAbsolutePathText() {
-        Path absolutePath = Paths.get("").toAbsolutePath();
-        if (absolutePath.endsWith("src")) {
-            Path tmp = Paths.get("..", "resource");
-            absolutePath = absolutePath.resolve(tmp);
+        Path pathCurrentDirectory = Paths.get("").toAbsolutePath();
+        Path absolutePath;
+        if (pathCurrentDirectory.endsWith("src")) {
+            absolutePath = pathCurrentDirectory.resolve(Paths.get("..", "resource"));
         } else {
-            absolutePath = absolutePath.resolve("resource");
+            absolutePath = pathCurrentDirectory.resolve("resource");
         }
         return Paths.get(String.valueOf(absolutePath), "russian_nouns.txt");
     }
