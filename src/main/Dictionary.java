@@ -22,7 +22,7 @@ public class Dictionary {
         listWords = new BufferedReader(new InputStreamReader(resource)).lines().toList();
     }
 
-    protected String getRandomWordFromFile() {
+    protected String getRandomWordFromList() {
         final int minWordLength = 5;
         final int maxWordLength = 10;
         String word = listWords.get(new Random().nextInt(listWords.size()));

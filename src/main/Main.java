@@ -9,7 +9,7 @@ public class Main {
         dictionary.getListWordsFromFile();
 
         while (true) {
-            game.startGame(dictionary.getRandomWordFromFile());
+            game.startGame(dictionary.getRandomWordFromList());
         }
     }
 }
