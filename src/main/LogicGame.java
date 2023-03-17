@@ -18,12 +18,12 @@ public class LogicGame {
         return letter >= 'а' && letter <= 'я';
     }
 
-    private static void gameLoop() {
+    private static void gameLoop(ReadFile readFile) {
         final int maxCountErrors = 6;
         final String symbolMaskedLetter = "-";
 
         String wrongUserLetters = "";
-        String secretWord = ReadFile.getRandomWordFromFile();
+        String secretWord = readFile.getRandomWordFromFile();
         char[] userAnswer = new char[secretWord.length()];
         Arrays.fill(userAnswer, symbolMaskedLetter.charAt(0));
 
@@ -52,17 +52,19 @@ public class LogicGame {
         } else {
             System.out.println("you lose, word – " + secretWord);
         }
-        LogicGame.startGame();
     }
 
-    public static void startGame() {
+    public static void startGame(ReadFile readFile) {
         setCountUserErrors(0);
         System.out.println("1 for game, 2 for exit");
         Scanner input2 = new Scanner(System.in);
         switch (input2.next().charAt(0)) {
-            case ('1') -> LogicGame.gameLoop();
-            case ('2') -> System.out.println("bye!");
-            default -> startGame();
+            case ('1') -> LogicGame.gameLoop(readFile);
+            case ('2') -> {
+                System.out.println("bye!");
+                System.exit(0);
+            }
+            default -> startGame(readFile);
         }
     }
 }
