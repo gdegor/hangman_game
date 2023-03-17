@@ -9,9 +9,11 @@ ___
 
 Для успешного запуска приложения:
 - откройте терминал
-- перейдите в папку `hangman_game/src/`
-- скомпилируйте программу `javac main/*.java`
-- запустите игру `java main/Main.java`
+- перейдите в папку `hangman_game`
+- скомпилируйте программу:
+    - `javac src/main/*.java -d classes`
+    - `jar -cvfm hangman.jar resource/META-INF/MANIFEST.MF -C classes main -C resource russian_nouns.txt`
+- запустите игру `java -jar hangman.jar`
 
 ![1](img/1.png)
 ![2](img/2.png)
