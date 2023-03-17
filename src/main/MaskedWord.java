@@ -17,6 +17,10 @@ public class MaskedWord {
         return maskedWord;
     }
 
+    public String getSecretWord() {
+        return secretWord;
+    }
+
     public boolean openLetter(int index, String letter) {
         boolean open = false;
         while (index != -1) {

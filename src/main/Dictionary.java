@@ -12,9 +12,10 @@ public class Dictionary {
 
     public Dictionary(String filename) {
         this.filename = filename;
+        loadListWordsFromFile();
     }
 
-    protected void getListWordsFromFile() {
+    private void loadListWordsFromFile() {
         InputStream resource = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (resource == null) {
             throw new RuntimeException("Resource " + filename + " not found");

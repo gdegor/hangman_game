@@ -1,7 +1,7 @@
 package main;
 
 public class StagesOfHangman {
-    private final String[] hangman = {
+    public static final String[] hangman = {
             "    +---+\n" +
                     "    |   |\n" +
                     "    |\n" +
@@ -12,16 +12,16 @@ public class StagesOfHangman {
 
             "    +---+\n" +
                     "    |   |\n" +
-                                            "    |   O\n" +
-                                            "    |\n" +
-                                            "    |\n" +
-                                            "    |\n" +
-                                            "    =========",
+                    "    |   O\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "    |\n" +
+                    "    =========",
 
-                                            "    +---+\n" +
-                                            "    |   |\n" +
-                                            "    |   O\n" +
-                                            "    |   |\n" +
+            "    +---+\n" +
+                    "    |   |\n" +
+                    "    |   O\n" +
+                    "    |   |\n" +
                                             "    |\n" +
                                             "    |\n" +
                                             "    =========",
@@ -57,8 +57,4 @@ public class StagesOfHangman {
                                             "    |  / \\\n" +
                                             "    |\n" +
                                             "    =========" };
-
-    public String[] getHangman() {
-        return hangman;
-    }
 }
