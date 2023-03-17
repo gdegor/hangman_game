@@ -4,6 +4,9 @@
 resource/russian_nouns.txt.
 ___
 
+Техническое задание проекта: https://zhukovsd.github.io/java-backend-learning-course/Projects/Hangman/
+___
+
 Для успешного запуска приложения:
 - откройте терминал
 - перейдите в папку `hangman_game/src/`
