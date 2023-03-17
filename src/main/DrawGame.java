@@ -1,17 +1,18 @@
 package main;
 
 public class DrawGame {
-    public static void clearTerm() {
-        final String combClear = "\033[H\033[2J"; // for start program in terminal
+    private void clearTerm() {
+        final String combClear = "\033[H\033[2J";
         System.out.print(combClear);
         System.out.flush();
     }
 
-    public static void printImage(int err, char[] userAnswer, String wrongUserLiteral) {
+    public void printImage(Game game, MaskedWord maskedWord) {
+        StagesOfHangman stagesOfHangman = new StagesOfHangman();
         clearTerm();
-        System.out.println("errors : " + err);
-        System.out.println(wrongUserLiteral);
-        System.out.println(StagesOfHangman.getHangman()[err]);
-        System.out.println(userAnswer);
+        System.out.println("errors : " + game.getCountUserErrors());
+        System.out.println(game.getWrongUserLetters());
+        System.out.println(stagesOfHangman.getHangman()[game.getCountUserErrors()]);
+        System.out.println(maskedWord.getMaskedWord());
     }
 }

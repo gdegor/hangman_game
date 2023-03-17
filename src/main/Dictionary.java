@@ -6,12 +6,19 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Random;
 
-public class ReadFile {
+public class Dictionary {
     private List<String> listWords;
+    private final String filename;
 
-    protected void getListWordsFromFile(String filename) {
+    public Dictionary(String filename) {
+        this.filename = filename;
+    }
+
+    protected void getListWordsFromFile() {
         InputStream resource = this.getClass().getClassLoader().getResourceAsStream(filename);
-        assert resource != null;
+        if (resource == null) {
+            throw new RuntimeException("Resource " + filename + " not found");
+        }
         listWords = new BufferedReader(new InputStreamReader(resource)).lines().toList();
     }
 
